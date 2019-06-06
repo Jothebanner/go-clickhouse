@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strings"
 	"time"
-	"cypto/tls"
+	"crypto/tls"
 )
 
 const (
