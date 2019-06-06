@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strings"
 	"time"
+	"cypto/tls"
 )
 
 const (
@@ -24,7 +25,7 @@ type HttpTransport struct {
 func (t HttpTransport) Exec(conn *Conn, q Query, readOnly bool) (res string, err error) {
 	var resp *http.Response
 	query := prepareHttp(q.Stmt, q.args)
-	client := &http.Client{Timeout: t.Timeout}
+	client := &http.Client{Timeout: t.Timeout, TLSClientConfig: &tls.Config{InsecureSkipVerify : t.SkipHTTPSVerification}}
 	if readOnly {
 		if len(query) > 0 {
 			query = "?query=" + query
