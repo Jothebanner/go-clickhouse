@@ -30,7 +30,9 @@ func (t HttpTransport) Exec(conn *Conn, q Query, readOnly bool) (res string, err
 			InsecureSkipVerify: true,
 		},
 	}
-	client := &http.Client{Timeout: t.Timeout, Transport: tr,}}
+	client := &http.Client{Timeout: t.Timeout, Transport: tr,
+			      }
+}
 	if readOnly {
 		if len(query) > 0 {
 			query = "?query=" + query
