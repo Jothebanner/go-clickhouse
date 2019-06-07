@@ -20,6 +20,7 @@ type Transport interface {
 
 type HttpTransport struct {
 	Timeout time.Duration
+	http.Transport
 }
 
 func (t HttpTransport) Exec(conn *Conn, q Query, readOnly bool) (res string, err error) {
@@ -30,7 +31,7 @@ func (t HttpTransport) Exec(conn *Conn, q Query, readOnly bool) (res string, err
 			InsecureSkipVerify: true
 		}
 	}
-	client := &http.Client{Transport: tr,Timeout: t.Timeout}
+	client := &http.Client{Transport: tr, Timeout: t.Timeout}
 	if readOnly {
 		if len(query) > 0 {
 			query = "?query=" + query
