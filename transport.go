@@ -28,8 +28,8 @@ func (t HttpTransport) Exec(conn *Conn, q Query, readOnly bool) (res string, err
 	query := prepareHttp(q.Stmt, q.args)
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: true
-		}
+			InsecureSkipVerify: true,
+		},
 	}
 	client := &http.Client{Transport: tr, Timeout: t.Timeout}
 	if readOnly {
