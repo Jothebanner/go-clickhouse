@@ -20,7 +20,10 @@ type Transport interface {
 
 type HttpTransport struct {
 	Timeout time.Duration
-	TLSClientConfig 
+}
+
+type Config struct {
+	TLSClientConfig
 }
 
 func (t HttpTransport) Exec(conn *Conn, q Query, readOnly bool) (res string, err error) {
