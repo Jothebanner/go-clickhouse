@@ -22,14 +22,15 @@ type HttpTransport struct {
 	Timeout time.Duration
 }
 
-type Config struct {
-	TLSClientConfig
-}
-
 func (t HttpTransport) Exec(conn *Conn, q Query, readOnly bool) (res string, err error) {
 	var resp *http.Response
 	query := prepareHttp(q.Stmt, q.args)
-	client := &http.Client{Timeout: t.Timeout, TLSClientConfig: &tls.Config{InsecureSkipVerify : t.SkipHTTPSVerification}}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true,
+		},
+	}
+	client := &http.Client{Timeout: t.Timeout, Transport: tr,}}
 	if readOnly {
 		if len(query) > 0 {
 			query = "?query=" + query
